@@ -3,7 +3,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from app.api.endpoints.auth import auth_router
 from app.api.endpoints.tasks import tasks_router
-import uvicorn
 from app.core.config import settings
 
 
@@ -46,12 +45,4 @@ async def root():
         "version": settings.PROJECT_VERSION,
         "docs_url": "/docs",
         "redoc_url": "/redoc"
-    }
-
-if __name__ == "__main__":
-    uvicorn.run(
-        "main:app",
-        host=settings.SERVER_HOST,
-        port=settings.SERVER_PORT,
-        reload=settings.DEBUG
-    )        
+    }        
