@@ -15,17 +15,16 @@ class Base(DeclarativeBase):
 engine = create_async_engine(
     settings.DATABASE_URL,
     echo=settings.DEBUG,
-    pool_pre_ping=True  # Проверка соединения перед использованием
+    pool_pre_ping=True  
 )
 
-# Создаем фабрику сессий
+
 AsyncSessionLocal = async_sessionmaker(
     engine,
     class_=AsyncSession,
     expire_on_commit=False
 )
 
-# Функция инициализации базы данных
 async def init_db():
     try:
         async with engine.begin() as conn:
@@ -36,7 +35,7 @@ async def init_db():
         logger.error(f"Error initializing database: {e}")
         raise
 
-# Функция закрытия соединений с базой данных
+
 async def close_db():
     try:
         logger.info("Closing database connections...")
@@ -46,7 +45,7 @@ async def close_db():
         logger.error(f"Error closing database: {e}")
         raise
 
-# Функция-генератор для получения сессии базы данных
+
 async def get_db():
     async with AsyncSessionLocal() as session:
         try:
